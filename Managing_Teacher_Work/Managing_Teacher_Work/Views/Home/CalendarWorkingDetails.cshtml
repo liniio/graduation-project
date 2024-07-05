@@ -1,0 +1,73 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    ViewBag.Title = "CalendarWorkingDetails";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var Cal = (CalendarWorking)ViewBag.Cw;
+    var teacherbyID = (Teacher)ViewBag.teacher;
+    var typecalByID = (TypeCalendar)ViewBag.typecalendar;
+    var workbyID = (Work)ViewBag.work;
+}
+<script>
+    function cancel() {
+        if ((document.referrer.toString().indexOf("/Home/") != -1) || document.referrer.toString().indexOf("/Calendar-Working-Detail-Level2/")) {
+            window.location = "/Home/";
+        }
+    }
+</script>
+
+
+<div>
+    <div class="body">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <h2 style="text-transform: uppercase;">
+                        <b></b>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <h4><b>@Cal.Name_CalendarWorking</b></h4>
+                </div>
+            </div>
+        </div>
+        <div class="table-custom">
+            <table class="table" style="width: 100%">
+                <tr>
+                    <td style="width: 20%">Thời gian thực hiện</td>
+
+                    <td style="width: 80%">Từ ngày @Cal.DateStart.ToString("dd/MM/yyyy") đến @Cal.DateEnd.ToString("dd/MM/yyyy") </td>
+                </tr>
+                <tr>
+                    <td style="width: 20%">Loại lịch công tác</td>
+                    <td style="width: 80%">@typecalByID.TypeName</td>
+                </tr>
+              
+                <tr>
+                    <td style="width: 20%">Giáo viên</td>
+                    <td style="width: 80%"><span class="fa fa-user"></span>&nbsp; @teacherbyID.Name_Teacher</td>
+                </tr>   
+                <tr>
+                    <td style="width: 20%">Nội dung công việc</td>
+                    <td style="width: 80%">@Html.Raw(Cal.Description.Substring(0,1200)+"...")
+                    </td>
+                </tr>
+               
+
+            </table>
+           
+            <br />
+        </div>
+        <br />
+        <div class="row" style="text-align: center;">
+            <a class="btn btn-primary" href="/Calendar-Working-Detail-Level2/@Cal.ID">Xem chi tiết</a>
+            <button class="btn btn-search" style="background-color:orangered; color: white" onclick="cancel();">
+                <span></span><i class="fa fa-undo"></i>&nbsp; Quay lại
+            </button>
+        </div>
+        <br />
+    </div>
+</div>

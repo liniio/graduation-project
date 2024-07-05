@@ -1,0 +1,259 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var listForm = (List<Files>)ViewBag.listForm;
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+    var listReport = (List<ReportMonth>)ViewBag.listReport;
+
+}
+<style>
+    .button-delete {
+        color: white;
+    }
+</style>
+<div class="row">
+    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+        <li role="presentation">
+            <a href="/Home/" id="home-tab">Lịch công tác</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="/Home-ManageTeacher/">Danh sách giáo viên</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="/Home-ManageStudent/">Danh sách sinh viên</a>
+        </li>
+
+        <li role="presentation">
+            <a href="/Home-ManageNote/">Ghi chú công việc</a>
+        </li>
+        <li role="presentation" class="active">
+            <a href="/Report/">Tạo Báo cáo tháng</a>
+        </li>
+        @if (session.GroupID == "ADMIN")
+        {
+            <li role="presentation">
+                <a href="/Statistics-Report/">Thống kê báo cáo tháng</a>
+            </li>
+        }
+
+        <li role="presentation">
+            <a href="/Extention/">Tiện ích</a>
+        </li>
+    </ul>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Mẫu báo cáo tháng</h2>
+            @*<ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>*@
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @if (TempData["AlertMessage"] != null)
+            {
+                    <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                        @TempData["AlertMessage"]
+                    </div>
+                }
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã mẫu</th>
+                        <th>Tên mẫu</th>
+                        <th>Tải Xuống</th>
+                        @if (session.GroupID == "ADMIN")
+                        {
+                            <th>Thao tác</th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (listForm != null)
+                    {
+                        foreach (var item in listForm)
+                        {
+                            <tr>
+                                <th scope="row">MBC-@item.ID</th>
+                                <td>@(item.Name ?? "")</td>
+                                <td><a href="@(item.FileForm??"")"><i class="fas fa-file-word"></i>&nbsp;<i>Tải xuống</i></a></td>
+                                @if (session.GroupID == "ADMIN")
+                                {
+                                    <td>
+
+                                        <button href="#" class="btn btn-danger btn-xs" style="color:white;">
+                                            <i class="fas fa-trash"></i>&nbsp; 
+                                            @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID },
+                                            new AjaxOptions
+                                            {
+                                                Confirm = "Bạn có muốn xoá mẫu này?",
+                                                OnComplete = "$('row_" + @item.ID + "').remove()",
+                                                HttpMethod = "Delete"
+                                            }, new { @class = "button-delete" })
+                                        </button>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+
+
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Thao tác<small>chức năng báo cáo</small></h2>
+            @*<ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>*@
+            <div class="clearfix"></div>
+        </div>
+        @Html.Partial("_AddFormModal")
+        @Html.Partial("_SendReport")
+        <div class="x_content">
+
+
+
+
+
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalSendReport" onclick="Gui()"><i class="fas fa-paper-plane"></i>&nbsp; Gửi báo cáo tháng</button>
+            @if (session.GroupID == "ADMIN")
+            {
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Them()"><i class="fa fa-plus-square"></i>&nbsp; Thêm mẫu báo cáo</button>
+
+            }
+            <a class="btn btn-search" style="background-color:orangered; color: white" href="/Home/">
+                <span></span><i class="fa fa-undo"></i>&nbsp; Quay lại
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Hoạt động báo cáo tháng gần nhất <small>của giáo viên trong hệ thống </small></h2>
+            @*<ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>*@
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Người gửi</th>
+                        <th>Báo cáo ngày</th>
+                        <th>Thời gian gửi trong hệ thống</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (listReport != null)
+                    {
+                        foreach (var i in listReport)
+                        {
+                            <tr>
+                                <th scope="row">BC-@i.ID</th>
+                                <td>@i.Name</td>
+                                <td>@i.Date.ToString("dd/MM/yyyy")</td>
+                                <td>@i.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script>
+    function Them() {
+        SetNull();
+        $("#bt_sua").hide();
+        $("#bt_them").show();
+    };
+    function SetNull() {
+        $("#Name").val('');
+        $("#FileForm").val('');
+    };
+    function Gui() {
+        SetNullFormSend();
+        $("#bt_suarp").hide();
+        $("#bt_guirp").show();
+    };
+    function SetNullFormSend() {
+        $("#Name").val('');
+        $("#Date").val('');
+        $("#Files").val('');
+    };
+</script>
+

@@ -1,0 +1,209 @@
+﻿
+@{ 
+    var listTeacher = (List<Managing_Teacher_Work.Models.Teacher>)ViewBag.listTeacher;
+    var listWork = (List<Managing_Teacher_Work.Models.Work>)ViewBag.listWork;
+    var listTypeCalendar = (List<Managing_Teacher_Work.Models.TypeCalendar>)ViewBag.listTypeCalendar;
+}
+@section ScriptFooter{
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+
+    }
+<script>
+    jQuery(document).ready(function () {
+        selectElement('WorkID', '#WorkID')
+
+        function selectElement(id, valueToSelect) {
+            let element = document.getElementById(id);
+            element.value = valueToSelect;
+        }
+
+    });
+
+    function validate() {
+        if ($('#Name_CalendarWorking').val() == "")
+        {
+            alert('Tên lịch không được để trống ! Mời nhập bạn chọn!');
+            $('#Name_CalendarWorking').focus();
+            return false;
+        }
+        if ((CKEDITOR.instances["Description"].getData().length) == 0)
+        {
+            alert('Bạn chưa chọn nội dung lịch làm việc!Mời chọn');
+            return false;
+        }
+        if ($('#DateStart').val() == "") {
+            alert("Bạn chưa chọn ngày bắt đầu!");
+            $('#DateStart').focus();
+            return false;
+        }
+        if ($('#DateEnd').val() == "") {
+            alert("Bạn chưa chọn ngày kết thúc!");
+            $('#DateEnd').focus();
+            return false;
+        }
+        var NgayBatDau = $('#DateStart').val();
+        var NgayKetThuc = $('#DateEnd').val();
+        if (NgayBatDau > NgayKetThuc)
+        {
+            alert('Ngày kết thúc phải lớn hơn ngày bắt đầu!Mời chọn lại!');
+            $('#DateEnd').focus();
+            return false;
+        }
+        if ($('#TeacherID').val() == "KhongChon") {
+            alert('Bạn chưa chọn giáo viên ! Mời chọn');
+            return false;
+        }
+        if ($('#WorkID').val() == "KhongChon") {
+            alert('Bạn chưa chọn công việc ! Mời chọn');
+            return false;
+        }
+        if ($('#TypeCalendarID').val() == "KhongChon") {
+            alert('Bạn chưa chọn loại lịch công tác ! Mời chọn');
+            return false;
+        }
+        
+        return true;
+    }
+    function cancel() {
+        if ((document.referrer.toString().indexOf("/Home/") != -1)) {
+            window.location = "/Home/";
+        }
+    }
+    var date = new Date(parseInt('#DateEnd'.substring(10)));
+
+</script>
+
+<form action="/CalendarWorking/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý lịch công tác</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên lịch công tác<span style="color:red;"> (*)</span></label>
+                        <input class="form-control" type="text" id="Name_CalendarWorking" name="Name_CalendarWorking" />
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả lịch công tác<span style="color:red;"> (*)</span></label>
+                       <textarea name="Description" id="Description"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ngày bắt đầu<span style="color:red;"> (*)</span></label>
+                        <input class="form-control" type="date" id="DateStart" name="DateStart"  />
+                        <input id="NBD"   type="text" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày kết thúc<span style="color:red;"> (*)</span></label>
+                        <input class="form-control" type="date" id="DateEnd" name="DateEnd" data-date-format />
+                        <input id="NKT" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label>Địa điểm</label>
+                        <input class="form-control" type="text" id="Address" name="Address" />
+                    </div>
+                    <div class="form-group">
+                        <label>Giáo viên<span style="color:red;"> (*)</span> </label>
+                        <select name="TeacherID" id="TeacherID" class="form-control">
+                            <option value="KhongChon">Chọn...</option>
+                            @foreach (var item in listTeacher)
+                            {
+                                <option value="@item.ID">@item.Name_Teacher</option>
+                            }
+                         
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Công việc<span style="color:red;"> (*)</span></label>
+                        <select name="WorkID" id="WorkID" class="form-control">
+                            <option value="KhongChon">Chọn...</option>
+                            @foreach (var item1 in listWork)
+                            {
+                                <option value="@item1.ID">@item1.Name_Work</option>
+                            }
+                          
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Loại lịch công tác<span style="color:red;"> (*)</span></label>
+                        <select name="TypeCalendarID" id="TypeCalendarID" class="form-control">
+                            <option value="KhongChon">Chọn...</option>
+                            @foreach (var item2 in listTypeCalendar)
+                            {
+                                
+                                <option value="@item2.ID">@item2.TypeName</option>
+                            }
+                          
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tình trạng công tác<span style="color:red;"> (*)</span></label>
+                       
+                        <select class="form-control" name="WorkState" id="WorkState">
+                            <option value="DangThucHien">Đang thực hiện</option>
+                            <option value="DaHoanThanh">Đã hoàn thành</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                      <select name="Status"  class="form-control">
+                          <option value="HoatDong">Hoạt động</option>
+                          <option value="KhongHoatDong">Không hoạt động</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Văn bản đính kèm<span style="color:red"> (*)</span></label>
+                        <input type="text" name="Files" id="Files" class="form-control" />
+                        <input type="button" value="Tải lên file" onclick="BrowseServer();" class="controls" />
+                    </div>
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate()" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick=" return validate()" />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/CKfinder-Fill-Extention/ckfinder/ckfinder.js"></script>
+<script>
+
+    CKEDITOR.replace("Description");
+
+    CKFinder.setupCKEditor(null, '/ckfinder');
+</script>
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+    function SetFileField(fileUrl) {
+        document.getElementById("Files").value = fileUrl;
+    }
+</script>
+

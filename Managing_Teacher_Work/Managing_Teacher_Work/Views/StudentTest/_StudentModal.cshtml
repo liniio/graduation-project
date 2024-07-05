@@ -1,0 +1,125 @@
+﻿
+@{ 
+    var listClass = (List<Managing_Teacher_Work.Models.Class>)ViewBag.listClass;
+}
+<script>
+    function validate() {
+        if ($('#Name_Student').val() == "")
+        {
+            alert('Tên sinh viên không được để trống!');
+            return false;
+
+        }
+        if ($('#DateOfBirth').val() == "") {
+            alert('Bạn chưa chọn ngày sinh!');
+            return false;
+
+        }
+        if ($('#Address').val() == "") {
+            alert('Bạn chưa chọn địa chỉ!');
+            return false;
+
+        }
+        if ($('#Address').val() == "") {
+            alert('Bạn chưa chọn địa chỉ!');
+            return false;
+
+
+        }
+        if ($('#Email').val() == "") {
+            alert('Email không được để trống!');
+            return false;
+        }
+        if ($('#Phone').val() == "") {
+            alert('Số điện thoại không được để trống!');
+            return false;
+        }
+        if ($('#ClassID').val() == "KhongChon") {
+            alert('Bạn chưa chọn lớp ! Mời chọn');
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="/Student/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý sinh viên</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên sinh viên<span style="color:red">(*)</span> </label>
+                        <input class="form-control" type="text" id="Name_Student" name="Name_Student" />
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày sinh<span style="color:red">(*)</span></label>
+                        <input class="form-control" type="date" id="DateOfBirth" name="DateOfBirth" />
+                        <input class="form-control" type="text" id="NS" name="NS" disabled/>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ<span style="color:red">(*)</span></label>
+                        <input class="form-control" type="text" id="Address" name="Address" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email<span style="color:red">(*)</span></label>
+                        <input class="form-control" type="email" id="Email" name="Email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại<span style="color:red">(*)</span></label>
+                        <input class="form-control" type="number" id="Phone" name="Phone" />
+                    </div>
+                    <div class="form-group">
+                        <label>Lớp<span style="color:red">(*)</span></label>
+                      <select name="ClassID" class="form-control">
+                          <option value="KhongChon">Chọn...</option>
+                          @foreach (var item in listClass)
+                          {
+                            <option value="@item.ID">@item.Name</option>
+                          }
+                         
+                      </select>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-lightbulb-o"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fa fa-map-marker"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate()" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate()"/>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/assets/ckfinder/ckfinder.js"></script>
+<script>
+
+    CKEDITOR.replace("Description");
+
+    CKFinder.setupCKEditor(null, '/ckfinder');
+</script>
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+</script>
+

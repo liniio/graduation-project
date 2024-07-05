@@ -1,0 +1,79 @@
+﻿<script>
+    function validate() {
+        if ($('#Name').val() == "")
+        {
+            alert('Tên mẫu báo cáo không được để trống !');
+            return false;
+        }
+        if ($('#FileForm').val() == "") {
+            alert('Bạn chưa chọn file mẫu báo cáo!');
+            return false;
+        }
+       
+        return true;
+    }
+</script>
+
+<form action="/ReportMonth/AddFiles" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mẫu báo cáo tháng</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên mẫu<span style="color:red">(*)</span> </label>
+                        <input class="form-control col-md-7 col-xs-12" type="text" id="Name" name="Name" required="required" />
+                    </div>
+                    <div class="form-group">
+                        <label>File báo cáo<span style="color:red">(*)</span></label>
+                        <input type="text" name="FileForm" id="FileForm" class="form-control" />
+                        <input type="button" value="Tải lên" onclick="BrowseServer();" class="controls" />
+                    </div>
+                   
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate();" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate();" />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/assets/ckfinder/ckfinder.js"></script>
+
+<script>
+
+    CKFinder.setupCKEditor(null, '/ckfinder');
+</script>
+
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+    function SetFileField(fileUrl) {
+        document.getElementById("FileForm").value = fileUrl;
+    }
+</script>
+

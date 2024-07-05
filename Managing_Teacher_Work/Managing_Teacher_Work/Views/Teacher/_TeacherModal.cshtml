@@ -1,0 +1,126 @@
+﻿@{ 
+    var listScience = (List<Managing_Teacher_Work.Models.Science>)ViewBag.listScience;
+}
+<script>
+    function validate() {
+        if ($('#Name_Teacher').val() == "")
+        {
+            alert('Bạn chưa chọn tên giáo viên ! ');
+            return false;
+        }
+        if ($('#Phone').val() == "") {
+            alert('Bạn chưa nhập số điện thoại ! Mời chọn ');
+            return false;
+        }
+        if ($('#DateOfBirth').val() == "") {
+            alert('Chưa chọn ngày sinh ! Mời chọn');
+            return false;
+        }
+        if ($('#Avatar').val() == "") {
+            alert('Bạn chưa chọn ảnh đại diện!');
+            return false;
+        }
+        if ($('#Status').val() == "Khongchon") {
+            alert('Bạn chưa chọn trạng thái!');
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="/Teacher/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý giáo viên</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên giáo viên<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="Name_Teacher" name="Name_Teacher" />
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="number" id="Phone" name="Phone" />
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                       <input type="text" class="form-control" name="Address" id="Address"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày sinh<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="date" id="DateOfBirth" name="DateOfBirth" data-date-format />
+                        <input class="form-control" id="NTL" name="NTL" type="text" disabled/>
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh đại diện<span style="color:red"> (*)</span></label>
+                        <input type="text" name="Avatar" id="Avatar" class="form-control"/>
+                        <input type="button" value="Tải ảnh lên" onclick="BrowseServer();" class="controls" />
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <select name="Gender" class="form-control">
+                            <option value="Nam">Nam</option>
+                            <option value="Nu">Nữ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái<span style="color:red"> (*)</span></label>
+                        <select class="form-control" name="Status" id="Status">
+                            <option value="KhongChon">Chọn...</option>
+                            <option value="GiaoVienChinhThuc">Giáo viên</option>
+                            <option value="GiaoVienThucTap">Giáo viên thực tập</option>
+                        </select>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+                    <div class="form-group">
+                        <label>Khoa<span style="color:red"> (*)</span></label>
+                        <select class="form-control" name="SicenceID" id="SicenceID">
+                            <option value="KhongChon">---Chọn khoa---</option>
+                            @foreach (var item in listScience)
+                            {
+                                   <option value="@item.ID">@item.Name</option>
+                            }
+                            
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate();" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate();"/>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/assets/ckfinder/ckfinder.js"></script>
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+    function SetFileField(fileUrl) {
+        document.getElementById("Avatar").value = fileUrl;
+    }
+
+</script>

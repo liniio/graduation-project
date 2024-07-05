@@ -1,0 +1,80 @@
+﻿<script>
+    function validate() {
+        if ($('#Name').val() == "")
+        {
+            alert('Tên menu không được để trống!');
+            return false;
+        }
+        if ($('#MenuUrl').val() == "")
+        {
+            alert('Bạn chưa chọn đường dẫn !');
+            return false;
+        }
+        if ($('#MenuICon').val() == "") {
+            alert('Bạn chưa chọn icon cho menu !');
+            return false;
+        }
+        return true;
+
+    }
+</script>
+<form action="/Menu/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý menu</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên menu<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="Name" name="Name" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <input class="form-control" type="text" id="Description" name="Description" />
+                    </div>
+                    <div class="form-group">
+                        <label>Đường dẫn<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="MenuUrl" name="MenuUrl" />
+                    </div>
+                    <div class="form-group">
+                        <label>ClassMenu<span style="color:red"> (*)</span> </label>
+                        <input class="form-control" type="text" id="MenuICon" name="MenuICon" />
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái </label>
+                       <select name="Enable" class="form-control">
+                           <option value="true">Hoạt động</option>
+                           <option value="false">Không hoạt động</option>
+                       </select>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate();"/>
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate();" />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

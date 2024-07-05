@@ -1,0 +1,113 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+    var listClass = (List<Class>)ViewBag.listClass;
+}
+
+<script>
+    function validaterp() {
+       
+        if ($('#ClassName').val() == "KhongChon") {
+            alert('Bạn chưa chọn lớp!');
+            return false;
+        }
+        if ($('#Date').val() == "") {
+            alert('Chưa chọn ngày báo cáo! Mời chọn');
+            return false;
+        }
+        if ($('#Files').val() == "") {
+            alert('Chưa chọn báo cáo tải lên!');
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<form action="/ReportMonth/SendReport" method="post" class="needs-validation">
+    <div class="modal" id="modalSendReport">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Gửi báo cáo tháng</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Giáo viên báo cáo: </label>
+                        <br />
+                        <label>&nbsp;---- @session.Name ---- </label>
+                        <input type="hidden" id="Name" name="Name" value="@session.Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Báo cáo lớp<span style="color:red"> (*)</span></label>
+                     @if (listClass != null)
+                     {
+                           
+                                <select name="ClassName" id="ClassName" class="form-control">
+                                    <option value="KhongChon">---Chọn lớp học---</option>
+                                    @foreach (var item in listClass)
+                                    {
+                                    <option value="@item.Name">@item.Name</option>
+                                    }
+                                </select>
+                           
+                     }
+
+                    </div>
+                    <div class="form-group">
+                        <label>Báo cáo ngày <span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="date" id="Date" name="Date" data-date-format />
+                    </div>
+                    <div class="form-group">
+                        <label>File báo cáo<span style="color:red"> (*)</span></label>
+                        <input type="text" name="Files" id="Files" class="form-control" />
+                        <input type="button" value="Tải lên" onclick="BrowseServer();" class="controls" />
+                    </div>
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_suarp" value="Cập Nhật" onclick="return validaterp();" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_guirp" value="Gửi" onclick="return validaterp();" />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form
+
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/assets/ckfinder/ckfinder.js"></script>
+
+<script>
+    CKFinder.setupCKEditor(null, '/ckfinder');
+</script>
+
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+    function SetFileField(fileUrl) {
+        document.getElementById("Files").value = fileUrl;
+    }
+</script>
+

@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "ManageStudent";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var listClass = (List<Managing_Teacher_Work.ViewModels.ClassViewModel>)ViewBag.listClass;
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+
+}
+
+<div class="row">
+    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+        <li role="presentation">
+            <a href="/Home/" id="home-tab">Lịch công tác</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="/Home-ManageTeacher/">Danh sách giáo viên</a>
+        </li>
+        <li role="presentation" class="active">
+            <a href="/Home-ManageStudent/">Danh sách lớp học</a>
+        </li>
+
+        <li role="presentation" class="">
+            <a href="/Home-ManageNote/">Ghi chú công việc</a>
+        </li>
+        <li role="presentation">
+            <a href="/Report/">Tạo Báo cáo tháng</a>
+        </li>
+        @if (session.GroupID == "ADMIN")
+        {
+            <li role="presentation">
+                <a href="/Statistics-Report/">Thống kê báo cáo tháng</a>
+            </li>
+        }
+
+        <li role="presentation">
+            <a href="/Extention/">Tiện ích</a>
+        </li>
+    </ul>
+</div>
+<div id="myTabContent" class="tab-content">
+    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Danh sách lớp học</h2>
+                        @*<ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>*@
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <table id="datatable-buttons" class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr style="width:100%">
+                                    <th style="width:20%">Tên lớp</th>
+                                    <th style="width:20%">Giáo viên chủ nhiệm</th>
+                                    <th style="width:30%">Khoa</th>
+                                    <th style="width:30%">Danh sách sinh viên</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (listClass != null)
+                                {
+
+                                    foreach (var item in listClass)
+                                    {
+
+
+                                        <tr id="row_@item.ID">
+                                            <td style="display:none">@item.Name </td>
+                                            <td>@item.TeacherName</td>
+                                            <td>@item.ScienceName</td>
+                                            <td><a href="/liststudent/@item.ID" class="btn btn-success btn-xs">Danh sách sinh viên lớp @item.Name</a></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

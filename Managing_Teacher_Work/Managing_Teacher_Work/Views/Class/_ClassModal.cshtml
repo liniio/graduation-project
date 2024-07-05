@@ -1,0 +1,97 @@
+﻿@{ 
+    var listTeacher = (List<Managing_Teacher_Work.Models.Teacher>)ViewBag.listTeacher;
+    var listScience =(List<Managing_Teacher_Work.Models.Science>)ViewBag.listScience;
+}
+<script>
+    function validate() {
+        if ($('#Name').val() == "")
+        {
+            alert('Tên lớp không được bỏ trống!');
+            return false;
+        }
+        if ($('#Address').val() == "")
+        {
+            alert('Địa chỉ không được bỏ trống!');
+            return false;
+        }
+        if ($('#TeacherID').val() == "KhongChon")
+        {
+            alert('Bạn chưa chọn giáo viên!');
+            return false;
+        }
+        if ($('#ScienceID').val() == "KhongChon") {
+            alert('Bạn chưa chọn khoa!');
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="/Class/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý lớp học</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên lớp <span style="color:red;"> (*)</span></label>
+                        <input class="form-control" type="text" id="Name" name="Name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Địa điểm<span style="color:red;"> (*)</span></label>
+                        <input class="form-control" type="text" id="Address" name="Address" />
+                    </div>
+                    <div class="form-group">
+                        <label>Giáo viên chủ nhiệm<span style="color:red;"> (*)</span></label>
+                        <select name="TeacherID" id="TeacherID" class="form-control">
+                            <option value="KhongChon">Chọn...</option>
+                            @foreach (var item in listTeacher)
+                            {
+                                <option value="@item.ID">@item.Name_Teacher</option>
+                            }
+                          
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Khoa <span style="color:red;"> (*)</span></label>
+                        <select name="ScienceID" id="ScienceID" class="form-control">
+                            <option value="KhongChon">Chọn...</option>
+                            @foreach (var item1 in listScience)
+                            {
+                                <option value="@item1.ID">@item1.Name</option>
+                                }
+                        
+                        </select>
+                      
+                    </div>
+                   
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate()" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate()" />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

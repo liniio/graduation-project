@@ -1,0 +1,35 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    var listMenu = (List<Menu>)ViewBag.listMenu;
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+}
+<div class="menu_section">
+    @*<h3>Menu hệ thống</h3>*@
+    <ul class="nav side-menu">
+        @if (session.GroupID == "ADMIN")
+        {
+           
+            foreach (var item in listMenu)
+            {
+                <li>
+                    <a href="/@item.MenuUrl/"><i class="@item.MenuICon"></i>&nbsp;@item.Name</a>
+
+                </li>
+            }
+            
+        }
+        else
+        {
+            <li>
+                <a href="/Home/"><i class="fa fa-home"></i>&nbsp;Trang chủ</a>
+            </li>
+            <li>
+                <a href="/Report/"><i class="fa fa-table"></i>&nbsp;Báo cáo tháng</a>
+            </li>
+        }
+
+
+
+
+    </ul>
+</div>

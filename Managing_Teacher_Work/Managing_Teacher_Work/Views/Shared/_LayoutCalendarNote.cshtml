@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0">*@
+    <title>Hệ thống quản lý công tác giáo viên</title>
+
+    @*<link href="~/Content2/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+  
+    <link href="~/Content2/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  
+    <script src="~/Script2/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    
+        @*<div class="row" style="text-align:center;">
+            <h2><b>Ghi chú công việc</b></h2>
+
+            <a class="btn btn-search" style="background-color:#5f80bc; color: white" href="/Home/">
+                <span class="fa fa-backward"></span> Về trang chủ
+            </a>
+
+        </div>*@
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="pull-right">
+                <i> <b>Hệ thống quản lý công tác giáo viên chủ nhiệm</b></i>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+    </div>
+
+    <script src="~/Script2/jquery-1.10.2.min.js"></script>
+    <script src="~/Script2/bootstrap.min.js"></script>
+    <link href="~/Content2/Fullcalendar.min.css" rel="stylesheet" />
+
+    <link href="~/Content2/Fullcalendar.print.css" rel="stylesheet" />
+    <link href="~/Content2/DateTimePickerBootstrap.css" rel="stylesheet" />
+    @RenderSection("Scripts", false)
+</body>
+</html>

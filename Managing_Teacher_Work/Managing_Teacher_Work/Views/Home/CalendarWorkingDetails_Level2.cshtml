@@ -1,0 +1,55 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    ViewBag.Title = "CalendarWorkingDetails_Level2";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var Cal = (CalendarWorking)ViewBag.Calendarworking;
+    var teacherbyID = (Teacher)ViewBag.teacher;
+    var typecalByID = (TypeCalendar)ViewBag.typecalendar;
+    var workbyID = (Work)ViewBag.work;
+}
+<script>
+    function cancel() {
+        if ((document.referrer.toString().indexOf("/Calendar-Working-Detail/") != -1)) {
+            window.location = "/Calendar-Working-Detail/@Cal.ID";
+        }
+    }
+</script>
+<div style="height: 100%; margin: 0; display: flex; justify-content: center; align-items: center;">
+    <div class="body" style="width: 80%; background-color: #ffffff; padding: 30px;">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <h2><b>@(Cal.Name_CalendarWorking??"")</b></h2>
+                </div>
+            </div>
+        </div>
+        <div style="padding-top: 5px;">
+            <span><span class="fa fa-user"></span>&nbsp;@teacherbyID.Name_Teacher</span> &emsp; <i class="fas fa-check-circle"></i>&nbsp;@if (Cal.WorkState == "DangThucHien") { <span> Đang thực hiện</span> } else { <span>Đã hoàn thành</span> } &emsp; <i class="fas fa-clock"></i>&nbsp;<i>Từ ngày @(Cal.DateStart.ToString("dd/MM/yyyy")??"") đến ngày @(Cal.DateEnd.ToString("dd/MM/yyyy")??"")</i> &emsp; <i class="fas fa-map-marker-alt"></i>&nbsp;<i>@(Cal.Address??"")</i> &emsp; <i class="fas fa-calendar-minus"></i>&nbsp;<i> @(typecalByID.TypeName??"")</i> &emsp; <i class="fas fa-briefcase"></i>&nbsp;<i> @(workbyID.Name_Work??"")</i>
+        </div>
+        <hr />
+        @*<p><i><b>Nội dung công việc:</b></i></p>*@
+        @if (Cal.Description != null)
+        {
+            <p>@Html.Raw(Cal.Description)</p>
+        }
+        else
+        {
+            <p>Không có dữ liệu</p>
+        }
+
+        <hr />
+
+        @*<div>
+            <h5><i><b>Văn bản đính kèm:&ensp; </b></i><a href="@Cal.Files"><i class="fas fa-file-word"></i>&nbsp; <i>Tải xuống</i></a></h5>
+        </div>*@
+
+        <div class="input" style="text-align: center;">
+
+            <h5><i><b>Văn bản đính kèm:&ensp; </b></i><a href="@Cal.Files"><i class="fas fa-file-word"></i>&nbsp; <i>Tải xuống</i></a></h5>
+            <br />
+            <button class="btn btn-search" style="background-color:orangered; color: white" onclick="cancel();">
+                <i class="fa fa-undo"></i>&nbsp; Quay lại
+            </button>
+        </div>
+    </div>
+</div>

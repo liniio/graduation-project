@@ -1,0 +1,89 @@
+﻿<script>
+    function validate() {
+        if ($('#Name').val() == "")
+        {
+            alert('Tên khoa không được để trống !');
+            return false;
+        }
+        if ($('#Address').val() == "") {
+            alert('Bạn chưa chọn địa chỉ !');
+            return false;
+        }
+        if ($('#Founding').val() == "") {
+            alert("Bạn chưa chọn ngày thành lập!");
+            $('#Founding').focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="/Sciense/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý khoa<span style="color:red"> (*)</span></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên khoa<span style="color:red"> (*)</span> </label>
+                        <input class="form-control col-md-7 col-xs-12" type="text" id="Name" name="Name" required="required" />
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="Address" name="Address" />
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea id="Description" name="Description" value=""></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày thành lập<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="date" id="Founding" name="Founding" data-date-format />
+                        <input type="text" name="NTL" id="NTL" class="form-control" disabled/>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate();"/>
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate();" />
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/assets/ckfinder/ckfinder.js"></script>
+<script>
+
+    CKEDITOR.replace("Description");
+
+    CKFinder.setupCKEditor(null, '/ckfinder');
+</script>
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+</script>
+

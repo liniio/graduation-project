@@ -1,0 +1,11 @@
+G:\PROJECT-FINAL\Managing_Teacher_Work\Common\bin\Debug\Common.dll
+G:\PROJECT-FINAL\Managing_Teacher_Work\Common\bin\Debug\Common.pdb
+G:\PROJECT-FINAL\Managing_Teacher_Work\Common\obj\Debug\Common.dll
+G:\PROJECT-FINAL\Managing_Teacher_Work\Common\obj\Debug\Common.pdb
+G:\PROJECT-FINAL\Managing_Teacher_Work\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+D:\study\UGP\Project\Managing_Teacher_Work\Common\bin\Debug\Common.dll
+D:\study\UGP\Project\Managing_Teacher_Work\Common\bin\Debug\Common.pdb
+D:\study\UGP\Project\Managing_Teacher_Work\Common\obj\Debug\Common.csproj.AssemblyReference.cache
+D:\study\UGP\Project\Managing_Teacher_Work\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\study\UGP\Project\Managing_Teacher_Work\Common\obj\Debug\Common.dll
+D:\study\UGP\Project\Managing_Teacher_Work\Common\obj\Debug\Common.pdb

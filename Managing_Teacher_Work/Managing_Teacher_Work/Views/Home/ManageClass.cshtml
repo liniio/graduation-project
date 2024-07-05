@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "ManageClass";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+
+}
+
+<div class="row">
+    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+        <li role="presentation">
+            <a href="/Home/" id="home-tab">Lịch công tác</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="/Home-ManageTeacher/">Danh sách giáo viên</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="/Home-ManageStudent/">Danh sách sinh viên</a>
+        </li>
+
+        <li role="presentation">
+            <a href="/Home-ManageNote/">Ghi chú công việc</a>
+        </li>
+        <li role="presentation">
+            <a href="/Report/">Tạo Báo cáo tháng</a>
+        </li>
+        @if (session.GroupID == "ADMIN")
+        {
+            <li role="presentation">
+                <a href="/Statistics-Report/">Thống kê báo cáo tháng</a>
+            </li>
+        }
+
+        <li role="presentation">
+            <a href="/Extention/">Tiện ích</a>
+        </li>
+    </ul>
+</div>
+<div id="myTabContent" class="tab-content">
+    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Danh sách lớp học</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <table id="datatable-buttons" class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr style="width:100%">
+                                    <th style="width:20%">Công việc</th>
+                                    <th style="width:40%">Mô tả</th>
+                                    <th style="width:10%">Ngày bắt đầu</th>
+                                    <th style="width:10%">Ngày kết thúc</th>
+                                    <th style="width:15%">Chủ nhiệm</th>
+                                    <th style="width:5%">Tình trạng</th>
+                                </tr>
+                            </thead>
+
+
+                            @*<tbody>
+                                    @foreach (var item in listCW)
+                                    {
+                                        <tr>
+
+                                            <td>@(item.Name_CalendarWorking ?? "")</td>
+                                            <td>@(Html.Raw(item.Description))</td>
+                                            @if (item.DateStart != null)
+                                            {
+                                                <td>
+                                                    @(item.DateStart.ToString("dd/MM/yyyy"))
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td><p>Không có</p></td>
+                                            }
+
+                                            @if (item.DateEnd != null)
+                                            {
+                                                <td>@(item.DateEnd.ToString("dd/MM/yyyy"))</td>
+                                            }
+                                            else
+                                            {
+                                                <td><p>Không có</p></td>
+                                            }
+                                            <td>@item.Teacher_Name</td>
+                                            <td>@(item.WorkState == "DangThucHien" ? "Đang thực hiện" : "Hoàn thành")</td>
+                                        </tr>
+                                    }
+
+                                </tbody>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

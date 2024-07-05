@@ -1,0 +1,137 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    ViewBag.Title = "ListTeacher";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var listTeacher = (List<Teacher>)ViewBag.listTeacher;
+    var science = (Science)ViewBag.science;
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+
+}
+<script>
+    function cancel() {
+        if ((document.referrer.toString().indexOf("/Home-ManageTeacher/") != -1)) {
+            window.location = "/Home-ManageTeacher/";
+        }
+    }
+</script>
+<div class="row">
+    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+        <li role="presentation">
+            <a href="/Home/" id="home-tab">Lịch công tác</a>
+        </li>
+        <li role="presentation" class="active" id="bt">
+            <a href="/Home-ManageTeacher/">Danh sách giáo viên</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="/Home-ManageStudent/">Danh sách sinh viên</a>
+        </li>
+
+        <li role="presentation">
+            <a href="/Home-ManageNote/">Ghi chú công việc</a>
+        </li>
+        <li role="presentation">
+            <a href="/Report/">Tạo Báo cáo tháng</a>
+        </li>
+        @if (session.GroupID == "ADMIN")
+        {
+            <li role="presentation">
+                <a href="/Statistics-Report/">Thống kê báo cáo tháng</a>
+            </li>
+        }
+
+        <li role="presentation">
+            <a href="/Extention/">Tiện ích</a>
+        </li>
+    </ul>
+</div>
+
+<div id="myTabContent" class="tab-content">
+    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Danh sách giáo viên thuộc khoa @science.Name</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <table id="datatable-buttons" class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr style="width:100%">
+                                    <th style="width:30%">Tên giáo viên</th>
+                                    <th style="width:15%">Giới tính </th>
+                                    <th style="width:25%">Địa chỉ</th>
+                                    <th style="width:15%">Ngày sinh</th>
+                                    <th style="width:15%">Số điện thoại</th>
+
+
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach (var item in listTeacher)
+                                {
+                                    <tr>
+
+                                        <td><a href="/Profile-Teacher/@item.ID">@(item.Name_Teacher ?? "")</a></td>
+                                        @if (item.Gender == "Nam")
+                                        {
+                                            <td>Nam</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Nữ</td>
+                                        }
+                                        <td>@(item.Address ?? "")</td>
+                                        @if (item.DateOfBirth != null)
+                                        {
+                                            <td>
+                                                @(item.DateOfBirth.ToString("dd/MM/yyyy"))
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td><p>Không có</p></td>
+                                        }
+
+
+                                        <td>@item.Phone</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="input" style="text-align: center;">
+
+                        <button class="btn btn-search" style="background-color:orangered; color: white" onclick="cancel();">
+                            <span></span><i class="fa fa-undo"></i>&nbsp;Quay lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

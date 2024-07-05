@@ -1,0 +1,589 @@
+﻿@{
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hệ thống quản lý công tác giáo viên</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!--Fullcalendar-->
+    <link href="~/assets/vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+    <link href="~/assets/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+    <!-- iCheck -->
+    <link href="~/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="~/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <!-- Custom Theme Style -->
+    <link href="~/assets/production/css/custom.css" rel="stylesheet">
+    <style>
+        .time-frame {
+            background-color: #f7f7f7;
+            color: black;
+            width: 300px;
+            font-family: Arial;
+        }
+
+        .time-frame > div {
+            width: 100%;
+            text-align: center;
+        }
+
+        #date-part {
+            font-size: 14px;
+        }
+
+        #time-part {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="/Home/" class="site_title"><img class="site_logo" src="~/assets/production/images/hunre.png" /></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    @*@if (session == null)
+                    {
+
+                    }
+                    else
+                    {
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src="~/assets/production/images/user.png" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Chào bạn,</span>
+                            <h2>@session.Name</h2>
+                        </div>
+                    </div>
+                    }*@
+
+                    <!-- /menu profile quick info -->
+
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <!--Danh sach menu-->
+                        @try
+                        {
+                            { Html.RenderAction("DanhSachMenu", "Home");}
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                      
+
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="Logout-System">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            @if (session == null)
+            {
+
+            }
+            else
+            {
+            <div class="top_nav">
+
+                <div class="nav_menu">
+                    <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/assets/production/images/user.png" alt="">@session.Name
+                                    &nbsp;<span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li>
+                                        <a href="javascript:;"><i class="fas fa-info-circle pull-right"></i>Thông tin cá nhân</a>
+                                    </li>
+                                    @*<li>
+                                        <a href="javascript:;">
+                                            <span class="badge bg-red pull-right">50%</span>
+                                            <span>Tuỳ chọn</span>
+                                        </a>
+                                    </li>*@
+                                    <li>
+                                        <a href="javascript:;"><i class="fas fa-question-circle pull-right"></i>Trợ giúp</a>
+                                    </li>
+                                    <li>
+                                        <a href="/User/Logout"><i class="fas fa-sign-out-alt pull-right"></i>Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li role="presentation" class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="badge bg-green">6</span>
+                                </a>
+                                @*<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="~/assets/production/images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="image">
+                                                <img src="images/img.jpg" alt="Profile Image" />
+                                            </span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="text-center">
+                                            <a>
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>*@
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+            }
+
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+
+                        @*<div class="title_left">
+                            <h3>
+                                Hệ thống
+                                <small>
+                                    <i>quản lý công tác giáo viên chủ nhiệm</i>
+                                </small>
+                            </h3>
+                        </div>
+
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                <div class='time-frame'>
+                                    <div id='date-part'></div>
+                                    <div id='time-part'></div>
+                                </div>
+                                <br>
+
+                            </div>
+                        </div>*@
+
+                        <!--Thời tiết-->
+                        @*<div class="container">
+                            <header class="header">
+                                <div class="search">
+                                    <input type="text" placeholder="Enter City Name" id="search-txt">
+                                    <a id="search-btn" href="#"><i class="fas fa-search"></i></a>
+                                </div>
+                            </header>
+                            <main id="main">
+                                <div class="city-icon">
+                                    <div class="city-icon-holder">
+                                        <div id="city-name"></div>
+                                        <img src="" alt="" id="icon">
+                                    </div>
+                                </div>
+                                <div class="temperature">
+                                    <div id="temp"></div>
+                                </div>
+                                <div class="humidity">
+                                    <div id="humidity-div"></div>
+                                </div>
+                            </main>
+                        </div>*@
+                        <!--End-->
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                @RenderBody()
+                <!--Content -->
+            </div>
+        </div>
+        <!-- /page content -->
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                <i> <b>Hệ thống quản lý công tác giáo viên chủ nhiệm</b></i>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/assets/vendors/nprogress/nprogress.js"></script>
+    <!-- Datatables -->
+    <script src="~/assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/assets/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+    <script src="~/assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="~/assets/production/js/moment/moment.min.js"></script>
+    <script src="~/assets/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/weather/0.0.2/weather.min.js"></script>
+   
+    <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+
+    <!--Thời tiết -->
+    <script>
+        const appKey = "ff532977349290d86ac2bc3243a8ca5a";
+
+        var searchButton = document.getElementById("search-btn"),
+            searchInput = document.getElementById("search-txt"),
+            cityName = document.getElementById("city-name"),
+            icon = document.getElementById("icon"),
+            temperature = document.getElementById("temp"),
+            humidity = document.getElementById("humidity-div");
+
+        searchButton.addEventListener("click", findWeatherDetails);
+        searchInput.addEventListener("keyup", enterPressed);
+
+        function enterPressed(event) {
+            if (event.key === "Enter") {
+                findWeatherDetails();
+            }
+        }
+
+        function findWeatherDetails() {
+            if (searchInput.value === "") {
+
+            } else {
+                let searchLink = "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput.value + "&appid=" + appKey;
+                httpRequestAsync(searchLink, theResponse);
+            }
+        }
+
+        function theResponse(response) {
+            let jsonObject = JSON.parse(response);
+            cityName.innerHTML = jsonObject.name;
+            icon.src = "http://openweathermap.org/img/w/" + jsonObject.weather[0].icon + ".png";
+            temperature.innerHTML = parseInt(jsonObject.main.temp - 273) + "°"; //nhiet do tra ve sẽ theo do K nên chúng ta phải chuyen qua do C
+            humidity.innerHTML = jsonObject.main.humidity + "%";
+        }
+
+        function httpRequestAsync(url, callback) {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = () => {
+                if (httpRequest.readyState == 4 && httpRequest.status == 200)
+                    callback(httpRequest.responseText);
+            }
+            httpRequest.open("GET", url, true);
+            httpRequest.send();
+        }
+    </script>
+    <!--End-->
+
+    <script>
+        $(document).ready(function () {
+            var interval = setInterval(function () {
+                var momentNow = moment();
+                $('#date-part').html(momentNow.format('YYYY MMMM DD') + ' '
+                    + momentNow.format('dddd')
+                        .substring(0, 3).toUpperCase());
+                $('#time-part').html(momentNow.format('A hh:mm:ss'));
+            }, 100);
+
+            $('#stop-interval').on('click', function () {
+                clearInterval(interval);
+            });
+        });
+    </script>
+
+    <!-- FullCalendar -->
+    @*<script>
+        $(window).load(function () {
+            var date = new Date(),
+                d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear(),
+                started,
+                categoryClass;
+
+            var calendar = $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                selectable: true,
+                selectHelper: true,
+                select: function (start, end, allDay) {
+                    $('#fc_create').click();
+
+                    started = start;
+                    ended = end;
+
+                    $(".antosubmit").on("click", function () {
+                        var title = $("#title").val();
+                        if (end) {
+                            ended = end;
+                        }
+
+                        categoryClass = $("#event_type").val();
+
+                        if (title) {
+                            calendar.fullCalendar('renderEvent', {
+                                title: title,
+                                start: started,
+                                end: end,
+                                allDay: allDay
+                            },
+                                true // make the event "stick"
+                            );
+                        }
+
+                        $('#title').val('');
+
+                        calendar.fullCalendar('unselect');
+
+                        $('.antoclose').click();
+
+                        return false;
+                    });
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    $('#fc_edit').click();
+                    $('#title2').val(calEvent.title);
+
+                    categoryClass = $("#event_type").val();
+
+                    $(".antosubmit2").on("click", function () {
+                        calEvent.title = $("#title2").val();
+
+                        calendar.fullCalendar('updateEvent', calEvent);
+                        $('.antoclose2').click();
+                    });
+
+                    calendar.fullCalendar('unselect');
+                },
+                editable: true,
+                events: [{
+                    title: 'All Day Event',
+                    start: new Date(y, m, 1)
+                }, {
+                    title: 'Long Event',
+                    start: new Date(y, m, d - 5),
+                    end: new Date(y, m, d - 2)
+                }, {
+                    title: 'Meeting',
+                    start: new Date(y, m, d, 10, 30),
+                    allDay: false
+                }, {
+                    title: 'Lunch',
+                    start: new Date(y, m, d + 14, 12, 0),
+                    end: new Date(y, m, d, 14, 0),
+                    allDay: false
+                }, {
+                    title: 'Birthday Party',
+                    start: new Date(y, m, d + 1, 19, 0),
+                    end: new Date(y, m, d + 1, 22, 30),
+                    allDay: false
+                }, {
+                    title: 'Click for Google',
+                    start: new Date(y, m, 28),
+                    end: new Date(y, m, 29),
+                    url: 'http://google.com/'
+                }]
+            });
+        });
+    </script>*@
+    <!-- /FullCalendar -->
+    
+
+    <!-- Custom Theme Scripts -->
+    <script src="~/assets/production/js/custom.js"></script>
+
+    <!-- Datatables -->
+    <script>
+        $(document).ready(function () {
+            var handleDataTableButtons = function () {
+                if ($("#datatable-buttons").length) {
+                    $("#datatable-buttons").DataTable({
+                        dom: "Bfrtip",
+                        buttons: [
+                            {
+                                extend: "copy",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "csv",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "excel",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "print",
+                                className: "btn-sm"
+                            },
+                        ],
+                        responsive: true
+                    });
+                }
+            };
+
+            TableManageButtons = function () {
+                "use strict";
+                return {
+                    init: function () {
+                        handleDataTableButtons();
+                    }
+                };
+            }();
+
+            $('#datatable').dataTable();
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+
+            $('#datatable-responsive').DataTable();
+
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+
+            var table = $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+
+            TableManageButtons.init();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(1500).slideUp(500);
+        })
+    </script>
+
+    <!-- /Datatables -->
+    @RenderSection("ScriptFooter", false)
+</body>
+</html>

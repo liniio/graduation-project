@@ -1,0 +1,811 @@
+﻿@using Managing_Teacher_Work.Models;
+@{
+    ViewBag.Title = "Statistics_Report";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var mon1 = ViewBag.mon1;
+    var mon2 = ViewBag.mon2;
+    var mon3 = ViewBag.mon3;
+    var mon4 = ViewBag.mon4;
+    var mon5 = ViewBag.mon5;
+    var mon6 = ViewBag.mon6;
+    var mon7 = ViewBag.mon7;
+    var mon8 = ViewBag.mon8;
+    var mon9 = ViewBag.mon9;
+    var mon10 = ViewBag.mon10;
+    var mon11 = ViewBag.mon11;
+    var mon12 = ViewBag.mon12;
+    var listReportAll = (List<ReportMonth>)ViewBag.listReportAll;
+    var countItem = ViewBag.countItem;
+}
+<style>
+    .button-delete {
+        color: white;
+    }
+</style>
+
+<div class="row">
+    @if (TempData["AlertMessage"] != null)
+            {
+        <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+            @TempData["AlertMessage"]
+        </div>
+    }
+</div>
+
+
+<div class="row">
+    <div class="row">
+        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+            <li role="presentation">
+                <a href="/Home/" id="home-tab">Lịch công tác</a>
+            </li>
+            <li role="presentation" class="">
+                <a href="/Home-ManageTeacher/">Danh sách giáo viên</a>
+            </li>
+            <li role="presentation" class="">
+                <a href="/Home-ManageStudent/">Danh sách sinh viên</a>
+            </li>
+
+            <li role="presentation">
+                <a href="/Home-ManageNote/">Ghi chú công việc</a>
+            </li>
+            <li role="presentation">
+                <a href="/Report/">Tạo Báo cáo tháng</a>
+            </li>
+            <li role="presentation" class="active">
+                <a href="/Statistics-Report/">Thống kê báo cáo tháng</a>
+            </li>
+            <li role="presentation">
+                <a href="/Extention/">Tiện ích</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <h2 style="text-align:center; padding: 10px 0 5px 0;">CÁC BÁO CÁO GẦN ĐÂY THEO THÁNG</h2>
+    </div>
+    @*<hr />*@
+
+    @if (mon1 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 1 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon1)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon2 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 2 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon2)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon3 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 3 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon3)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon4 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 4 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon4)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon5 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 5 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon5)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon6 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 6 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon6)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-md-4">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Tháng 7 <small>Thống kê báo cáo</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>*@
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            @if (mon7 != null)
+            {
+                <div class="x_content">
+
+
+                    @foreach (var item in mon7)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            }
+            else
+            {
+                <div class="x_content">
+                    <article class="media event">
+
+                        <a class="pull-left">
+                            <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                        </a>
+
+                        <div class="media-body">
+                            <a class="title" href="#!"> Không có dữ liệu</a>
+
+                        </div>
+                    </article>
+
+
+
+
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Tháng 8 <small>Thống kê báo cáo</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>*@
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+
+                @foreach (var item in mon8)
+                {
+                    <article class="media event">
+
+                        <a class="pull-left">
+                            <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                        </a>
+
+                        <div class="media-body">
+                            <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                            <p>Giáo viên:&nbsp;@item.Name</p>
+                            <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                        </div>
+                    </article>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+    @if (mon9 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 9 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon9)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon10 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 10 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon10)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon11 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 11 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon11)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (mon12 != null)
+    {
+        <div class="col-md-4">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Tháng 12 <small>Thống kê báo cáo</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    @foreach (var item in mon12)
+                    {
+                        <article class="media event">
+
+                            <a class="pull-left">
+                                <img src="~/assets/production/images/word.png" style="width:52px;height:56px">
+                            </a>
+
+                            <div class="media-body">
+                                <a class="title" href="@item.Files"> Báo cáo lớp @item.ClassName</a>
+                                <p>Giáo viên:&nbsp;@item.Name</p>
+                                <p>Ngày gửi:&nbsp;@item.Date.ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </article>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row">
+    <h2 style="text-align:center; padding: 25px 0 5px 0;">DANH SÁCH BÁO CÁO CỦA GIÁO VIÊN CHỦ NHIỆM TRONG HỆ THỐNG</h2>
+</div>
+
+<div class="row">
+  
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            @*<div class="x_title">
+                <h2>Danh sách báo cáo của giáo viên chủ nhiệm trong hệ thống</h2>
+                <h6>Tổng số báo cáo của giáo viên chủ nhiệm: @countItem báo cáo</h6>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>*@
+            <div class="x_content">
+
+                <table id="datatable-buttons" class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr >
+                            <th>Tên giáo viên</th>
+                            <th >Báo cáo lớp</th>
+                            <th>Ngày báo cáo</th>
+                            <th>File báo cáo</th>
+                            <th>Ngày gửi trong hệ thống</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        @foreach (var it in listReportAll)
+                        {
+                            <tr id="row_@it.ID">
+
+                                <td>@it.Name</td>
+                                <td>@it.ClassName</td>
+                                <td>@it.Date.ToString("dd/MM/yyyy")</td>
+                                <td><a href="@it.Files" class="btn btn-primary btn-xs"><i class="fas fa-folder-open"></i>&nbsp; Xem</a></td>
+                                <td>@it.CreatedDate.Value.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>
+
+                                    <button href="#" class="btn btn-danger btn-xs" style="color:white;">
+                                        <i class="fas fa-trash"></i>&nbsp;
+                                        @Ajax.ActionLink("Xoá", "DeleteReport", new { @id = it.ID },
+                                            new AjaxOptions
+                                            {
+                                                Confirm = "Bạn có muốn xoá bản ghi này?",
+                                                OnComplete = "$('row_" + @it.ID + "').remove()",
+                                                HttpMethod = "DeleteReport"
+                                            }, new { @class = "button-delete" })
+                                    </button>
+
+                                </td>
+
+
+
+                            </tr>
+                        }
+
+                         
+                     
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

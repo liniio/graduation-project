@@ -1,0 +1,124 @@
+﻿@{
+    var listGroup = (List<Managing_Teacher_Work.Models.GroupUser>)ViewBag.listGroup;
+}
+
+<script>
+    function validate() {
+        if ($('#Name').val() == "") {
+            alert('Tên người dùng không được để trống!');
+            return false;
+        }
+        if ($('#UserName').val() == "") {
+            alert('Tên tài khoản không được để trống!');
+            return false;
+        }
+        if ($('#Password').val() == "") {
+            alert('Mật khẩu không được để trống!');
+            return false;
+        }
+        if ($('#GroupID').val() == "KhongChon") {
+            alert('Bạn chưa chọn quyền!');
+            return false;
+        }
+        if ($('#Phone').val() == "") {
+            alert('Số điện thoại không được để trống!');
+            return false;
+        }
+        if ($('#Email').val() == "") {
+            alert('Email không được để trống!');
+            return false;
+        }
+        return true;
+    }
+</script>
+<script src="~/assets/vendors/validator/validator.min.js"></script>
+<form action="/User/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý người dùng</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên người dùng<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="Name" name="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label>Tài khoản <span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="UserName" name="UserName" />
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="password" id="Password" name="Password" />
+                    </div>
+                    <div class="form-group">
+                        <label>Quyền<span style="color:red"> (*)</span></label>
+                        <select name="GroupID" class="form-control">
+                            <option value="KhongChon">Chọn...</option>
+                            @if (listGroup != null)
+                            {
+                                foreach (var item in listGroup)
+                                {
+                                    <option value="@item.ID">@item.Name_GroupUser</option>
+                                }
+                            }
+                            else
+                            {
+                                <option></option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <select name="Status" class="form-control">
+                            <option value="True">Kích hoạt</option>
+                            <option value="False">Huỷ kích hoạt</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại<span style="color:red"> (*)</span></label>
+                        <input type="number" name="Phone" id="Phone" class="form-control" required="required" />
+
+                    </div>
+                    <div class="form-group">
+                        <label>Email<span style="color:red"> (*)</span></label>
+                        <input type="email" name="Email" id="Email" class="form-control" required="required" />
+
+                    </div>
+                    @*<div class="form-group">
+                        <label>Trạng thái</label>
+                        <select name="Status" id="Status" class="form-control">
+                            <option value="True">Kích hoạt</option>
+                            <option value="False">Huỷ kích hoạt</option>
+                        </select>
+                    </div>*@
+                
+                <div class="form-group" hidden>
+                    <label>CreatedDate</label>
+                    <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate();" />
+                <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate();" />
+
+            </div>
+
+        </div>
+    </div>
+</form>

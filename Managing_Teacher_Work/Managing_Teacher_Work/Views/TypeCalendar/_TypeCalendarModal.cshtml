@@ -1,0 +1,84 @@
+﻿<script>
+    function validate() {
+        if ($('#TypeName').val() == "")
+        {
+            alert('Bạn chưa chọn tên loại lịch!');
+            return false;
+        }
+        if ((CKEDITOR.instances["TypeDescription"].getData().length) == 0) {
+            alert('Bạn chưa chọn mô tả lịch công việc!Mời chọn');
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="/TypeCalendar/Add" method="post" class="needs-validation">
+    <div class="modal" id="myModal">
+        <label value="@ViewData["Error"]"></label>
+        <div class="modal-dialog">
+            <label id="lblresult"></label>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Quản lý loại lịch công việc</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="hidden" name="ID" id="ID" value="0">
+                    <div class="form-group">
+                        <label>Tên loại công việc<span style="color:red"> (*)</span></label>
+                        <input class="form-control" type="text" id="TypeName" name="TypeName" />
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả công việc<span style="color:red"> (*)</span></label>
+                       <textarea name="TypeDescription" id="TypeDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                     <select name="Status" id="Status" class="form-control">
+                         <option value="DangThucHien">Đang thực hiện</option>
+                         <option value="HoanThanh">Hoàn thành</option>
+                     </select>
+                    </div>
+                  
+                    <div class="form-group" hidden>
+                        <label>CreatedDate</label>
+                        <input class="form-control" type="text" id="CreatedDate" name="CreatedDate" value="System.DateTime.Now" />
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp; Đóng</button>
+                    <button type="reset" class="btn btn-warning btn-sm"><i class="fas fa-undo"></i>&nbsp; Làm mới</button>
+
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_sua" value="Cập Nhật" onclick="return validate();" />
+                    <input type="submit" name="submit" class="btn btn-success btn-sm" id="bt_them" value="Thêm" onclick="return validate();"/>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/assets/ckeditor/ckeditor.js"></script>
+<script src="~/assets/ckfinder/ckfinder.js"></script>
+<script>
+
+    CKEDITOR.replace("TypeDescription");
+
+    CKFinder.setupCKEditor(null, '/ckfinder');
+</script>
+<script type="text/javascript">
+    function BrowseServer() {
+        var finder = new CKFinder();
+        finder.basePath = "~/Scrips/ckfinder";
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+</script>
+

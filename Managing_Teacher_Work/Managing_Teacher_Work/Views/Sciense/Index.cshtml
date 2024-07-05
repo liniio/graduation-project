@@ -1,0 +1,201 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    var listSciense = ViewBag.listSciense;
+   
+}
+<style>
+    .button-delete {
+        color: white;
+    }
+</style>
+@{
+    var session = (Managing_Teacher_Work.Common.UserLogin)Session[Managing_Teacher_Work.Common.CommonConstants.USER_SESSION];
+
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        if ($('#hdnSession').val() == 'MEMBER') {
+            alert('Bạn không có quyền truy cập vào mục này!');
+            window.location = "/Home/";
+        }
+
+    });
+</script>
+<div style="display:none;">
+    <input type="hidden" id="hdnSession" value="@session.GroupID" />
+</div>
+<div class="row">
+    <div>
+        <label id="lblresult"></label>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Danh sách các khoa<small></small></h2>
+                @*<ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Tuỳ chọn 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Tuỳ Chọn 2</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @if (ViewBag.Check == true)
+                {
+                    <div style="text-align:right">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="Them()"><i class="fa fa-plus-square"></i>&nbsp; Thêm mới</button>
+                    </div>
+                }
+                <div>
+                    @if (TempData["AlertMessage"] != null)
+            {
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert">
+                            @TempData["AlertMessage"]
+                        </div>
+                    }
+                </div>
+                <table id="datatable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="display:none;">Mã</th>
+                            <th>Tên khoa</th>
+                            <th>Địa điểm</th>
+                            <th>Mô tả</th>
+                            <th>Ngày thành lập</th>
+                            <th>Thao tác</th>
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        @if (listSciense != null)
+                        {
+
+                            foreach (var item in listSciense)
+                            {
+
+
+                                <tr id="row_@item.ID">
+                                    <td style="display:none">@item.ID </td>
+                                    <td><a href="#!" onclick="Sua(this)" data-toggle="modal" data-target="#myModal">@(item.Name ?? "")</a></td>
+                                    <td>@(item.Address ?? "")</td>
+                                    <td>@*<textarea class="form-control" style="margin: 0px; width: 284px; height: 77px;" readonly>@(item.Description??"")</textarea>*@ @(item.Description??"")</td>
+                                    @if (item.Founding != null)
+                                    {
+                                        <td>@item.Founding.ToString("dd/MM/yyyy")</td>
+                                        @*<td>@item.Founding.Value.ToString("dd/MM/yyyy")</td>*@
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+
+
+
+                                    @if (session.GroupID == "ADMIN")
+                                    {
+                                        <td>
+
+                                            <a href="#" class="btn btn-info btn-xs" onclick="Sua(this)" data-toggle="modal" data-target="#myModal"><i class="fas fa-edit"></i>&nbsp; Sửa </a>
+                                            <button href="#" class="btn btn-danger btn-xs" style="color:white;">
+                                                <i class="fas fa-trash"></i>&nbsp; 
+                                                @Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID },
+                                            new AjaxOptions
+                                            {
+                                                Confirm = "Bạn có muốn xoá bản ghi này?",
+                                                OnComplete = "$('row_" + @item.ID + "').remove()",
+                                                HttpMethod = "Delete"
+                                            }, new { @class = "button-delete" })
+                                            </button>
+
+                                        </td>
+                                    }
+
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_ScienseModal")
+<script>
+    function Them() {
+        SetNull();
+        $("#bt_sua").hide();
+        $("#bt_them").show();
+    };
+    function SetNull() {
+        $("#Name").val('');
+    };
+    function Xoa(el) {
+        var id = el.parentNode.parentNode.cells[0].textContent;
+        $.ajax({
+            url: '/Sciense/delList/?id=' + id,
+            type: 'POST',
+            dataType: 'json',
+            success: function () {
+                alert("Xóa thành công");
+                window.location.reload();
+            },
+            error: function () {
+                alert("Xóa thất bại");
+                window.location.reload();
+            }
+        });
+    }
+    function Sua(el) {
+        event.preventDefault();
+        $("#bt_sua").show();
+        $("#bt_them").hide();
+        var id = el.parentNode.parentNode.cells[0].textContent;
+        $.ajax({
+            url: '/Sciense/getList/?id=' + id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var json = JSON.parse(data);
+                $("#ID").val(json.ID);
+                $("#Name").val(json.Name);
+                $("#Address").val(json.Address);
+                $("#Description").val(json.Description);
+                CKEDITOR.instances['Description'].setData(json.Description);
+
+                $("#Founding").val(json.Founding);
+                $("#NTL").val(json.Founding);
+
+
+            },
+            error: function (err) {
+                alert("Error: " + err.responseText);
+            }
+        });
+    }
+</script>
+

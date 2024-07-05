@@ -1,0 +1,153 @@
+﻿@using Managing_Teacher_Work.Models
+@model LoginModel
+@{
+    Layout = null;
+    var alertLogin = ViewBag.alertLogin;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hệ thống quản lý công tác giáo viên chủ nhiệm</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="~/assets/production/css/custom.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('#UserName').focus();
+        });
+        function validate() {
+            if ($('#UserName').val() == "")
+            {
+                alert('Bạn chưa nhập tài khoản!');
+                $('#UserName').focus();
+                return false;
+            }
+            if (($('#UserName').val().length) > 30)
+            {
+                alert('Tài khoản không được dài quá 30 ký tự !');
+                $('#UserName').val('');
+                $('#UserName').focus();
+                return false;
+            }
+            if ($('#PassWord').val() == "")
+            {
+                alert('Bạn chưa nhập mật khẩu!');
+                $('#PassWord').focus();
+                return false;
+            }
+          
+            return true;
+        }
+    </script>
+    <style>
+        .login-form-size{
+            width:400px;
+        }
+        .validate-form-size{
+            list-style-type:none;
+        }
+        ul {
+            list-style-type:none;
+        }
+        .bg-login {
+            background: #223771 url(/assets/production/images/bg-login.jpg) center bottom no-repeat;
+            background-size: cover;
+        }
+        .logo-login {
+            max-height: 80px;
+        }
+        .sp-login {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-login {
+            margin: 15px 0;
+        }
+        .btn-login button {
+            width: 100%;
+            background: #223771;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 0;
+        }
+        .btn-login button:hover {
+            opacity: .8;
+        }
+    </style>
+</head>
+
+<body class="bg-login">
+    @*<div>
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+    </div>*@
+
+    <div id="wrapper">
+        <div class="logo-hunre">
+            <img class="logo-login" src="~/assets/production/images/logologin.png" />
+        </div>
+
+        <div id="login" class=" form">
+            <section class="login_content">
+
+                @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "login-form-size" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <form>
+                        <h1>ĐĂNG NHẬP</h1>
+                        @if (alertLogin == true)
+                        {
+                            <div class="alert alert-danger alert-dismissible errorBox" style="text-shadow: none; list-style-type:none">
+
+                                <i class="fa fa-exclamation-triangle"></i>&nbsp; @ViewBag.Mes
+                            </div>
+                        }
+
+                        <div>
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Tài khoản" })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                        <div>
+                            @Html.PasswordFor(model => model.PassWord, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                            @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="sp-login">
+                            <a href="#">Quên mật khẩu ?</a>
+                            <a href="#">Trợ giúp !</a>
+                        </div>
+
+                        <div class="btn-login">
+                            <button class="submit" type="submit" onclick="return validate();">Đăng nhập</button>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <p>© HUNRE 2024</p>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </section>
+        </div>
+    </div>
+</body>
+</html>
