@@ -1,5 +1,5 @@
 ### GRADUATION PROJECT 🎓
-**Building software to support homeroom teachers' work**
+**Software to support homeroom teachers' work**
 
 ### Description
 **Main features of the system**
